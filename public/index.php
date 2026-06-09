@@ -21,4 +21,8 @@ if (!array_key_exists($page, $pages)) {
     $page = 'dashboard';
 }
 
+// Database connection and functions
+require_once __DIR__ . '/../src/includes/db.php';
+require_once __DIR__ . '/../src/includes/functions.php';
+
 require_once __DIR__ . '/../src/pages/' . $pages[$page];

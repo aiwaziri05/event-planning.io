@@ -11,12 +11,27 @@
 <span class="material-symbols-outlined">settings</span> 
 </button> 
 <div class="h-8 w-px bg-outline-variant mx-sm"></div> 
+<?php
+// Mock user data since we don't have authentication yet
+// In a real app, this would come from $_SESSION
+if ($pdo) {
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
+    $stmt->execute(['alex.thompson@eventpro.com']);
+    $user = $stmt->fetch();
+} else {
+    $user = [
+        'full_name' => 'Alex Thompson',
+        'role' => 'Senior Event Planner',
+        'image_url' => 'https://i.pravatar.cc/100?u=alex'
+    ];
+}
+?>
 <div class="flex items-center gap-sm"> 
 <div class="text-right hidden lg:block"> 
-<p class="font-label-md text-label-md text-on-surface font-bold">Alex Thompson</p> 
-<p class="font-label-sm text-label-sm text-on-surface-variant">Senior Event Planner</p> 
+<p class="font-label-md text-label-md text-on-surface font-bold"><?php echo htmlspecialchars($user['full_name']); ?></p>
+<p class="font-label-sm text-label-sm text-on-surface-variant"><?php echo htmlspecialchars($user['role']); ?></p>
 </div> 
-<img alt="User profile avatar" class="w-10 h-10 rounded-full border border-outline-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjXMo33FHGMr0w17obB2YIXEny5zjda96O-Xe0_LePwVSgCabTBWdgbEIbGIIAD0SWN6GwKDRmiqoAF5J3GzIbvuSrTI4ycYZyA_UnzeErWZyeFi--bWMhVAYz-AcuDx0g7qDvoHY0Q-X4CrpDWRmOg2hvI3sFS9WZA1nl0QRyJXpmXGMMI8K3nITpHhJwuUULbNo59CHjRIYL9kuIFpZg5UFe52kXWHWnmenUqZqzV5rDmD0gca_VHHhJHVWiy04vbLCDrQnc-Xw_"/> 
+<img alt="User profile avatar" class="w-10 h-10 rounded-full border border-outline-variant" src="<?php echo htmlspecialchars($user['image_url']); ?>"/>
 </div> 
 </div> 
 </header> 
